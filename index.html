@@ -18,6 +18,8 @@
         @keyframes flash { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
         .walker { position: absolute; bottom: 15px; font-size: 34px; transition: left 0.4s; }
         .btn { width: 100%; background: linear-gradient(135deg, #1565C0 0%, #0D47A1 100%); color: #FFF; border: 3px solid #FFF; padding: 15px; border-radius: 30px; font-size: 15px; font-weight: 800; cursor: pointer; text-transform: uppercase; }
+        .party-item { position: absolute; pointer-events: none; font-size: 24px; animation: burstUp 2s linear forwards; }
+        @keyframes burstUp { 0% { bottom: 0px; opacity: 1; transform: scale(0.5); } 100% { bottom: 85%; opacity: 0; transform: scale(1.3); } }
     </style>
 </head>
 <body>
@@ -33,9 +35,9 @@
             <div id="p-title" class="card-title">Loading...</div>
             <p id="p-text" class="card-text"></p>
         </div>
-        <div class="viewport">
+        <div class="viewport" id="v-box">
             <div class="star">⭐</div>
-            <div class="stable">🛖</div>
+            <div class="stable">放置</div>
             <div class="baby-jesus" id="jesus">👶👑</div>
             <div id="w" class="walker" style="left: 5%;">👶🐑</div>
         </div>
@@ -54,6 +56,22 @@
             document.getElementById('p-text').innerText = devotions[i].p;
             document.getElementById('w').style.left = (5 + (day - 1) * 2) + "%";
         }
+        function party() {
+            var items = ['🎈', '🌸', '🎁', '🎉', '✨'];
+            var box = document.getElementById('v-box');
+            for (var i = 0; i < 20; i++) {
+                (function(idx) {
+                    setTimeout(function() {
+                        var p = document.createElement('div');
+                        p.className = 'party-item';
+                        p.innerText = items[Math.floor(Math.random() * items.length)];
+                        p.style.left = (Math.random() * 80 + 5) + "%";
+                        box.appendChild(p);
+                        setTimeout(function() { p.remove(); }, 2000);
+                    }, idx * 100);
+                })(i);
+            }
+        }
         function move() {
             if (day < 40) {
                 day++;
@@ -64,6 +82,7 @@
                     document.getElementById('jesus').style.display = 'block';
                     document.getElementById('action-btn').disabled = true;
                     document.getElementById('action-btn').innerText = "Arrived at the Manger! 🎉";
+                    party();
                 }
             }
         }
