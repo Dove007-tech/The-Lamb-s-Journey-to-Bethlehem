@@ -48,7 +48,6 @@
             <input type="text" id="child-name" class="name-box" placeholder="Type Your Name Here..." oninput="updateBannerName(this.value)">
         </div>
         
-        <!-- Native Pure HTML Layout Panels (100% immune to script crashes) -->
         <div id="prayer-block-0" class="card active-view">
             <div class="card-title">Advent Morning Offering (Nov 15 - Nov 29)</div>
             <p class="card-text">O Jesus, through the Immaculate Heart of Mary, I offer You my prayers, works, joys, and sufferings of this day, to prepare my heart for Your coming at Christmas. Amen.
@@ -87,24 +86,23 @@ Hail and blessed be the hour and moment in which the Son of God was born of the 
     </div>
 
     <script>
-        var currentDay = 1; const MAX_DAYS = 40;
-        var grp = document.getElementById('walker-group');
+        var currentDay = 1; var MAX_DAYS = 40;
         
         function updateBannerName(val) { 
             document.getElementById('banner-text').innerText = val.trim() ? val : "Little Pilgrim"; 
         }
         
         function updateDisplay() {
-            document.getElementById('prayer-block-0').classList.remove('active-view');
-            document.getElementById('prayer-block-1').classList.remove('active-view');
-            document.getElementById('prayer-block-2').classList.remove('active-view');
+            document.getElementById('prayer-block-0').className = 'card';
+            document.getElementById('prayer-block-1').className = 'card';
+            document.getElementById('prayer-block-2').className = 'card';
             
             if (currentDay < 16) { 
-                document.getElementById('prayer-block-0').classList.add('active-view'); 
+                document.getElementById('prayer-block-0').className = 'card active-view'; 
             } else if (currentDay === 16) { 
-                document.getElementById('prayer-block-1').classList.add('active-view'); 
+                document.getElementById('prayer-block-1').className = 'card active-view'; 
             } else { 
-                document.getElementById('prayer-block-2').classList.add('active-view'); 
+                document.getElementById('prayer-block-2').className = 'card active-view'; 
             }
         }
 
@@ -116,10 +114,10 @@ Hail and blessed be the hour and moment in which the Son of God was born of the 
                 updateDisplay();
                 
                 var pct = 5 + ((currentDay - 1) * (62 / (MAX_DAYS - 1))); 
-                grp.style.left = pct + '%';
+                document.getElementById('walker-group').style.left = pct + '%';
                 
-                grp.classList.add('walk-bounce'); 
-                setTimeout(function() { grp.classList.remove('walk-bounce'); }, 400);
+                document.getElementById('walker-group').classList.add('walk-bounce'); 
+                setTimeout(function() { document.getElementById('walker-group').classList.remove('walk-bounce'); }, 400);
                 
                 if (currentDay === MAX_DAYS) {
                     var btn = document.getElementById('action-btn'); 
@@ -130,3 +128,4 @@ Hail and blessed be the hour and moment in which the Son of God was born of the 
                     document.getElementById('jesus-babe').style.display = 'block'; 
                     document.getElementById('stable-manger').style.transform = 'scale(1.1)';
                     
+                    var ems = ['🎈', '🌸', '🎁', '✨', '🎉'];
