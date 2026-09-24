@@ -1,4 +1,4 @@
-html_content = """<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -13,7 +13,7 @@ html_content = """<!DOCTYPE html>
         .name-input-panel { margin-bottom: 12px; text-align: center; }
         .name-box { padding: 8px 12px; font-size: 14px; border: 2px solid #4FC3F7; border-radius: 12px; outline: none; width: 60%; text-align: center; font-weight: bold; }
         .card { background-color: #FFFFFF; border: 2px solid #90CAF9; border-radius: 20px; padding: 16px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); margin-bottom: 12px; }
-        .card-title { font-size: 13px; font-weight: 800; color: #B71C1C; text-transform: uppercase; margin-bottom: 6px; text-align: center; }
+        .card-title { font-size: 14px; font-weight: 800; color: #B71C1C; text-transform: uppercase; margin-bottom: 6px; text-align: center; }
         .card-text { font-size: 14px; color: #212121; margin: 0; text-align: justify; white-space: pre-line; font-weight: 500; }
         .canvas-viewport { flex-grow: 1; min-height: 250px; position: relative; margin-bottom: 12px; border-radius: 24px; overflow: hidden; background: linear-gradient(180deg, #030712 0%, #0B1528 70%, #1E293B 100%); border: 3px solid #FFD54F; }
         .star { position: absolute; top: 15px; right: 35px; font-size: 34px; animation: flash 1.5s infinite ease-in-out; text-shadow: 0 0 15px #FFF59D; z-index: 10; }
@@ -22,7 +22,6 @@ html_content = """<!DOCTYPE html>
         @keyframes babyGlow { 0%, 100% { filter: drop-shadow(0 0 4px #FFF); } 50% { filter: drop-shadow(0 0 12px #FFD54F); } }
         @keyframes flash { 0%, 100% { opacity: 0.5; transform: scale(1); } 50% { opacity: 1; transform: scale(1.15); } }
         .path-line { position: absolute; bottom: 35px; width: 100%; height: 2px; border-bottom: 2px dashed rgba(255,255,255,0.2); }
-        .milestone-banner { position: absolute; top: 15px; left: 15px; background: rgba(13, 71, 161, 0.85); color: #FFF; font-family: sans-serif; font-size: 11px; font-weight: 800; padding: 4px 10px; border-radius: 12px; border: 1px solid #4FC3F7; z-index: 12; }
         .pilgrim-group { position: absolute; bottom: 15px; display: flex; flex-direction: column; align-items: center; transition: left 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94); z-index: 20; }
         .name-banner { background-color: #FFFDE7; color: #E65100; font-family: sans-serif; font-size: 11px; font-weight: 800; padding: 2px 8px; border: 1px solid #FFD54F; border-radius: 8px; margin-bottom: 2px; white-space: nowrap; box-shadow: 0 2px 5px rgba(0,0,0,0.1); text-transform: uppercase; }
         .sprites-row { display: flex; align-items: flex-end; gap: 4px; }
@@ -47,12 +46,13 @@ html_content = """<!DOCTYPE html>
         <div class="name-input-panel">
             <input type="text" id="child-name" class="name-box" placeholder="Type Your Name Here..." oninput="updateBannerName(this.value)">
         </div>
+        
         <div class="card">
-            <div id="p-title" class="card-title">Advent Preparation</div>
-            <p id="p-text" class="card-text">Loading daily devotion...</p>
+            <div id="p-title" class="card-title">Daily Devotions</div>
+            <p id="p-text" class="card-text">Loading prayer path...</p>
         </div>
+
         <div class="canvas-viewport" id="viewport">
-            <div id="milestone-lbl" class="milestone-banner">Nov 15: Start of Journey</div>
             <div class="star">⭐</div>
             <div class="stable" id="stable-manger">🛖</div>
             <div class="baby-jesus" id="jesus-babe">👶👑</div>
@@ -69,11 +69,13 @@ html_content = """<!DOCTYPE html>
         <button class="reset-btn" onclick="resetJourney()">Reset Pilgrimage Path</button>
     </div>
     <script>
-        var currentDay = 1; var MAX_DAYS = 40; var grp = document.getElementById('walker-group');
+        var currentDay = 1; const MAX_DAYS = 40;
+        var grp = document.getElementById('walker-group');
+        
         var prayers = [
             {
                 title: "Advent Morning Offering (Nov 15 - Nov 29)",
-                text: "O Jesus, through the Immaculate Heart of Mary, I offer You my prayers, works, joys, and sufferings of this day, to prepare my heart for Your coming at Christmas. Amen.\\n\\nOur Father, Who art in heaven, hallowed be Thy name. Thy kingdom come. Thy will be done on earth as it is in heaven. Give us this day our daily bread and forgive us our trespasses as we forgive those who trespass against us. And lead us not into temptation, but deliver us from evil. Amen."
+                text: "O Jesus, through the Immaculate Heart of Mary, I offer You my prayers, works, joys, and sufferings of this day, to prepare my heart for Your coming at Christmas. Amen.\n\nOur Father, Who art in heaven, hallowed be Thy name. Thy kingdom come. Thy will be done on earth as it is in heaven. Give us this day our daily bread and forgive us our trespasses as we forgive those who trespass against us. And lead us not into temptation, but deliver us from evil. Amen."
             },
             {
                 title: "St. Andrew Christmas Novena (Nov 30 - Dec 24)",
@@ -81,18 +83,21 @@ html_content = """<!DOCTYPE html>
             },
             {
                 title: "The Advent Magnificat Countdown (Dec 1 - Dec 24)",
-                text: "My soul magnifies the Lord, and my spirit rejoices in God my Savior. For He who is mighty has done great things for me, and holy is His name. Amen.\\n\\nHail and blessed be the hour and moment in which the Son of God was born of the most pure Virgin Mary, at midnight, in Bethlehem, in the piercing cold. Amen."
+                text: "My soul magnifies the Lord, and my spirit rejoices in God my Savior. For He who is mighty has done great things for me, and holy is His name. Amen.\n\nHail and blessed be the hour and moment in which the Son of God was born of the most pure Virgin Mary, at midnight, in Bethlehem, in the piercing cold. Amen."
             }
         ];
+
         function updateBannerName(val) { document.getElementById('banner-text').innerText = val.trim() ? val : "Little Pilgrim"; }
+        
         function updateDisplay() {
-            var idx = 0; var milestone = document.getElementById('milestone-lbl');
-            if (currentDay < 16) { milestone.innerText = "Nov 15: Winter Trail Journey"; idx = 0; }
-            else if (currentDay === 16) { milestone.innerText = "Nov 30: St. Andrew Novena Open!"; idx = 1; }
-            else if (currentDay > 16 && currentDay < 40) { milestone.innerText = "Dec " + (currentDay - 16) + ": Advent Cloud Path"; idx = 2; }
-            else if (currentDay === 40) { milestone.innerText = "Dec 24: Welcome to Bethlehem!"; idx = 2; }
-            document.getElementById('p-title').innerText = prayers[idx].title; document.getElementById('p-text').innerText = prayers[idx].text;
+            var idx = 0;
+            if (currentDay < 16) { idx = 0; }
+            else if (currentDay === 16) { idx = 1; }
+            else { idx = 2; }
+            document.getElementById('p-title').innerText = prayers[idx].title;
+            document.getElementById('p-text').innerText = prayers[idx].text;
         }
+
         function moveForward() {
             if (currentDay < MAX_DAYS) {
                 currentDay++;
@@ -101,5 +106,19 @@ html_content = """<!DOCTYPE html>
                 updateDisplay();
                 var pct = 5 + ((currentDay - 1) * (62 / (MAX_DAYS - 1))); grp.style.left = pct + '%';
                 grp.classList.add('walk-bounce'); setTimeout(function() { grp.classList.remove('walk-bounce'); }, 400);
+                
                 if (currentDay === MAX_DAYS) {
-                    var btn = document.getElementById('action-btn'); btn.disabled = true; btn.innerText = "Arrived at the Manger! \\uD83C\\uDF89"; btn.style.background = "#2E7D32";
+                    var btn = document.getElementById('action-btn'); btn.disabled = true; btn.innerText = "Arrived at the Manger! 🎉"; btn.style.background = "#2E7D32";
+                    document.getElementById('jesus-babe').style.display = 'block'; document.getElementById('stable-manger').style.transform = 'scale(1.1)';
+                    var ems = ['🎈', '🌸', '🎁', '✨', '🎉']; var v = document.getElementById('viewport');
+                    for (var i = 0; i < 25; i++) { launchCelebration(i, ems, v); }
+                }
+            }
+        }
+        function launchCelebration(i, ems, v) {
+            setTimeout(function() {
+                var p = document.createElement('div'); p.className = 'celebrate-item'; p.innerText = ems[Math.floor(Math.random() * ems.length)];
+                p.style.left = (Math.random() * 85 + 5) + '%'; v.appendChild(p); setTimeout(function() { p.remove(); }, 2500);
+            }, i * 150);
+        }
+        function resetJourney() {
