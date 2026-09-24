@@ -48,7 +48,7 @@
         </div>
         
         <div class="card">
-            <div id="p-title" class="card-title">Daily Devotions</div>
+            <div id="p-title" class="card-title">Advent Preparation</div>
             <p id="p-text" class="card-text">Loading prayer path...</p>
         </div>
 
@@ -69,9 +69,7 @@
         <button class="reset-btn" onclick="resetJourney()">Reset Pilgrimage Path</button>
     </div>
     <script>
-        var currentDay = 1; const MAX_DAYS = 40;
-        var grp = document.getElementById('walker-group');
-        
+        var currentDay = 1; var MAX_DAYS = 40; var grp = document.getElementById('walker-group');
         var prayers = [
             {
                 title: "Advent Morning Offering (Nov 15 - Nov 29)",
@@ -86,9 +84,7 @@
                 text: "My soul magnifies the Lord, and my spirit rejoices in God my Savior. For He who is mighty has done great things for me, and holy is His name. Amen.\n\nHail and blessed be the hour and moment in which the Son of God was born of the most pure Virgin Mary, at midnight, in Bethlehem, in the piercing cold. Amen."
             }
         ];
-
         function updateBannerName(val) { document.getElementById('banner-text').innerText = val.trim() ? val : "Little Pilgrim"; }
-        
         function updateDisplay() {
             var idx = 0;
             if (currentDay < 16) { idx = 0; }
@@ -97,7 +93,6 @@
             document.getElementById('p-title').innerText = prayers[idx].title;
             document.getElementById('p-text').innerText = prayers[idx].text;
         }
-
         function moveForward() {
             if (currentDay < MAX_DAYS) {
                 currentDay++;
@@ -106,7 +101,6 @@
                 updateDisplay();
                 var pct = 5 + ((currentDay - 1) * (62 / (MAX_DAYS - 1))); grp.style.left = pct + '%';
                 grp.classList.add('walk-bounce'); setTimeout(function() { grp.classList.remove('walk-bounce'); }, 400);
-                
                 if (currentDay === MAX_DAYS) {
                     var btn = document.getElementById('action-btn'); btn.disabled = true; btn.innerText = "Arrived at the Manger! 🎉"; btn.style.background = "#2E7D32";
                     document.getElementById('jesus-babe').style.display = 'block'; document.getElementById('stable-manger').style.transform = 'scale(1.1)';
