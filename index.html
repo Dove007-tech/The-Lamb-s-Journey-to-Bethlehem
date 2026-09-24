@@ -54,7 +54,7 @@
 
         <div class="canvas-viewport" id="viewport">
             <div class="star">⭐</div>
-            <div class="stable" id="stable-manger">🛖</div>
+            <div class="stable" id="stable-manger">稳定性</div>
             <div class="baby-jesus" id="jesus-babe">👶👑</div>
             <div class="path-line"></div>
             <div id="walker-group" class="pilgrim-group" style="left: 5%;">
@@ -69,13 +69,28 @@
         <button class="reset-btn" onclick="resetJourney()">Reset Pilgrimage Path</button>
     </div>
     
-    <!-- 🌟 External text delivery loop completely fixes box space limits -->
-    <script src="https://github.io"></script>
     <script>
         var currentDay = 1; var MAX_DAYS = 40; var grp = document.getElementById('walker-group');
+        var prayers = [
+            {
+                title: "Advent Morning Offering (Nov 15 - Nov 29)",
+                text: "O Jesus, through the Immaculate Heart of Mary, I offer You my prayers, works, joys, and sufferings of this day, to prepare my heart for Your coming at Christmas. Amen.\n\nOur Father, Who art in heaven, hallowed be Thy name. Thy kingdom come. Thy will be done on earth as it is in heaven. Give us this day our daily bread and forgive us our trespasses as we forgive those who trespass against us. And lead us not into temptation, but deliver us from evil. Amen."
+            },
+            {
+                title: "St. Andrew Christmas Novena (Nov 30 - Dec 24)",
+                text: "Hail and blessed be the hour and moment in which the Son of God was born of the most pure Virgin Mary, at midnight, in Bethlehem, in the piercing cold. In that hour vouchsafe, O my God, to hear my prayer and grant my desires, through the merits of Our Savior Jesus Christ, and of His blessed Mother. Amen."
+            },
+            {
+                title: "The Advent Magnificat Countdown (Dec 1 - Dec 24)",
+                text: "My soul magnifies the Lord, and my spirit rejoices in God my Savior. For He who is mighty has done great things for me, and holy is His name. Amen.\n\nHail and blessed be the hour and moment in which the Son of God was born of the most pure Virgin Mary, at midnight, in Bethlehem, in the piercing cold. Amen."
+            }
+        ];
         function updateBannerName(val) { document.getElementById('banner-text').innerText = val.trim() ? val : "Little Pilgrim"; }
         function updateDisplay() {
-            var idx = (currentDay < 16) ? 0 : (currentDay === 16 ? 1 : 2);
+            var idx = 0;
+            if (currentDay < 16) { idx = 0; }
+            else if (currentDay === 16) { idx = 1; }
+            else { idx = 2; }
             document.getElementById('p-title').innerText = prayers[idx].title;
             document.getElementById('p-text').innerText = prayers[idx].text;
         }
@@ -102,11 +117,3 @@
             }, i * 150);
         }
         function resetJourney() {
-            currentDay = 1; document.getElementById('day-lbl').innerText = "Day: 1 / " + MAX_DAYS; document.getElementById('steps-lbl').innerText = "39 Steps Left";
-            document.getElementById('jesus-babe').style.display = 'none'; document.getElementById('stable-manger').style.transform = 'scale(1)';
-            grp.style.left = '5%'; var btn = document.getElementById('action-btn'); btn.disabled = false; btn.innerText = "Recite Prayer & Take Step"; btn.style.background = "linear-gradient(135deg, #1565C0 0%, #0D47A1 100%)"; updateDisplay();
-        }
-        setTimeout(updateDisplay, 500);
-    </script>
-</body>
-</html>
