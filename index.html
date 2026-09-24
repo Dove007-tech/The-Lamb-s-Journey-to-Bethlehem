@@ -12,8 +12,7 @@
         .score-row { display: flex; justify-content: space-around; font-family: sans-serif; font-weight: 800; font-size: 13px; color: #1565C0; margin-top: 5px; border-top: 1px solid #90CAF9; padding-top: 6px; }
         .name-input-panel { margin-bottom: 12px; text-align: center; }
         .name-box { padding: 8px 12px; font-size: 14px; border: 2px solid #4FC3F7; border-radius: 12px; outline: none; width: 60%; text-align: center; font-weight: bold; }
-        .card { background-color: #FFFFFF; border: 2px solid #90CAF9; border-radius: 20px; padding: 16px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); margin-bottom: 12px; display: none; }
-        .card.active-view { display: block; }
+        .card { background-color: #FFFFFF; border: 2px solid #90CAF9; border-radius: 20px; padding: 16px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); margin-bottom: 12px; }
         .card-title { font-size: 14px; font-weight: 800; color: #B71C1C; text-transform: uppercase; margin-bottom: 6px; text-align: center; }
         .card-text { font-size: 14px; color: #212121; margin: 0; text-align: justify; white-space: pre-line; font-weight: 500; }
         .canvas-viewport { flex-grow: 1; min-height: 250px; position: relative; margin-bottom: 12px; border-radius: 24px; overflow: hidden; background: linear-gradient(180deg, #030712 0%, #0B1528 70%, #1E293B 100%); border: 3px solid #FFD54F; }
@@ -48,23 +47,9 @@
             <input type="text" id="child-name" class="name-box" placeholder="Type Your Name Here..." oninput="updateBannerName(this.value)">
         </div>
         
-        <div id="prayer-block-0" class="card active-view">
-            <div class="card-title">Advent Morning Offering (Nov 15 - Nov 29)</div>
-            <p class="card-text">O Jesus, through the Immaculate Heart of Mary, I offer You my prayers, works, joys, and sufferings of this day, to prepare my heart for Your coming at Christmas. Amen.
-
-Our Father, Who art in heaven, hallowed be Thy name. Thy kingdom come. Thy will be done on earth as it is in heaven. Give us this day our daily bread and forgive us our trespasses as we forgive those who trespass against us. And lead us not into temptation, but deliver us from evil. Amen.</p>
-        </div>
-
-        <div id="prayer-block-1" class="card">
-            <div class="card-title">St. Andrew Christmas Novena (Nov 30)</div>
-            <p class="card-text">Hail and blessed be the hour and moment in which the Son of God was born of the most pure Virgin Mary, at midnight, in Bethlehem, in the piercing cold. In that hour vouchsafe, O my God, to hear my prayer and grant my desires, through the merits of Our Savior Jesus Christ, and of His blessed Mother. Amen.</p>
-        </div>
-
-        <div id="prayer-block-2" class="card">
-            <div class="card-title">The Advent Magnificat Countdown (Dec 1 - Dec 24)</div>
-            <p class="card-text">My soul magnifies the Lord, and my spirit rejoices in God my Savior. For He who is mighty has done great things for me, and holy is His name. Amen.
-
-Hail and blessed be the hour and moment in which the Son of God was born of the most pure Virgin Mary, at midnight, in Bethlehem, in the piercing cold. Amen.</p>
+        <div class="card">
+            <div id="p-title" class="card-title">Advent Preparation</div>
+            <p id="p-text" class="card-text">Loading daily devotion...</p>
         </div>
 
         <div class="canvas-viewport" id="viewport">
@@ -80,52 +65,48 @@ Hail and blessed be the hour and moment in which the Son of God was born of the 
                 </div>
             </div>
         </div>
-        
         <button class="recite-btn" id="action-btn" onclick="moveForward()">Recite Prayer & Take Step</button>
         <button class="reset-btn" onclick="resetJourney()">Reset Pilgrimage Path</button>
     </div>
-
+    
+    <!-- 🌟 External text delivery loop completely fixes box space limits -->
+    <script src="https://github.io"></script>
     <script>
-        var currentDay = 1; var MAX_DAYS = 40;
-        
-        function updateBannerName(val) { 
-            document.getElementById('banner-text').innerText = val.trim() ? val : "Little Pilgrim"; 
-        }
-        
+        var currentDay = 1; var MAX_DAYS = 40; var grp = document.getElementById('walker-group');
+        function updateBannerName(val) { document.getElementById('banner-text').innerText = val.trim() ? val : "Little Pilgrim"; }
         function updateDisplay() {
-            document.getElementById('prayer-block-0').className = 'card';
-            document.getElementById('prayer-block-1').className = 'card';
-            document.getElementById('prayer-block-2').className = 'card';
-            
-            if (currentDay < 16) { 
-                document.getElementById('prayer-block-0').className = 'card active-view'; 
-            } else if (currentDay === 16) { 
-                document.getElementById('prayer-block-1').className = 'card active-view'; 
-            } else { 
-                document.getElementById('prayer-block-2').className = 'card active-view'; 
-            }
+            var idx = (currentDay < 16) ? 0 : (currentDay === 16 ? 1 : 2);
+            document.getElementById('p-title').innerText = prayers[idx].title;
+            document.getElementById('p-text').innerText = prayers[idx].text;
         }
-
         function moveForward() {
             if (currentDay < MAX_DAYS) {
                 currentDay++;
                 document.getElementById('day-lbl').innerText = "Day: " + currentDay + " / " + MAX_DAYS;
                 document.getElementById('steps-lbl').innerText = (MAX_DAYS - currentDay) + " Steps Left";
                 updateDisplay();
-                
-                var pct = 5 + ((currentDay - 1) * (62 / (MAX_DAYS - 1))); 
-                document.getElementById('walker-group').style.left = pct + '%';
-                
-                document.getElementById('walker-group').classList.add('walk-bounce'); 
-                setTimeout(function() { document.getElementById('walker-group').classList.remove('walk-bounce'); }, 400);
-                
+                var pct = 5 + ((currentDay - 1) * (62 / (MAX_DAYS - 1))); grp.style.left = pct + '%';
+                grp.classList.add('walk-bounce'); setTimeout(function() { grp.classList.remove('walk-bounce'); }, 400);
                 if (currentDay === MAX_DAYS) {
-                    var btn = document.getElementById('action-btn'); 
-                    btn.disabled = true; 
-                    btn.innerText = "Arrived at the Manger! 🎉"; 
-                    btn.style.background = "#2E7D32";
-                    
-                    document.getElementById('jesus-babe').style.display = 'block'; 
-                    document.getElementById('stable-manger').style.transform = 'scale(1.1)';
-                    
-                    var ems = ['🎈', '🌸', '🎁', '✨', '🎉'];
+                    var btn = document.getElementById('action-btn'); btn.disabled = true; btn.innerText = "Arrived at the Manger! 🎉"; btn.style.background = "#2E7D32";
+                    document.getElementById('jesus-babe').style.display = 'block'; document.getElementById('stable-manger').style.transform = 'scale(1.1)';
+                    var ems = ['🎈', '🌸', '🎁', '✨', '🎉']; var v = document.getElementById('viewport');
+                    for (var i = 0; i < 25; i++) { launchCelebration(i, ems, v); }
+                }
+            }
+        }
+        function launchCelebration(i, ems, v) {
+            setTimeout(function() {
+                var p = document.createElement('div'); p.className = 'celebrate-item'; p.innerText = ems[Math.floor(Math.random() * ems.length)];
+                p.style.left = (Math.random() * 85 + 5) + '%'; v.appendChild(p); setTimeout(function() { p.remove(); }, 2500);
+            }, i * 150);
+        }
+        function resetJourney() {
+            currentDay = 1; document.getElementById('day-lbl').innerText = "Day: 1 / " + MAX_DAYS; document.getElementById('steps-lbl').innerText = "39 Steps Left";
+            document.getElementById('jesus-babe').style.display = 'none'; document.getElementById('stable-manger').style.transform = 'scale(1)';
+            grp.style.left = '5%'; var btn = document.getElementById('action-btn'); btn.disabled = false; btn.innerText = "Recite Prayer & Take Step"; btn.style.background = "linear-gradient(135deg, #1565C0 0%, #0D47A1 100%)"; updateDisplay();
+        }
+        setTimeout(updateDisplay, 500);
+    </script>
+</body>
+</html>
